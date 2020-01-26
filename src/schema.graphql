@@ -6,4 +6,9 @@ type Book {
 
 type Query {
     books: [Book!]!
+    book(id: ID!): Book
+}
+
+type Mutation {
+    addBook(title: String!, id: ID!, author: String!): Book
 }
