@@ -35,9 +35,14 @@ const server = new ApolloServer({
   },
   context: ({ req, res }) => {
     return { req, res };
+  },
+  playground: {
+    settings: {
+      "request.credentials": "include"
+    }
   }
 });
 
-server.applyMiddleware({ app });
+server.applyMiddleware({ app, cors: false });
 
 export { server, app };
