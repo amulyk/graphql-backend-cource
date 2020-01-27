@@ -1,13 +1,15 @@
+const generateId = require('uuid/v1');
+
 const initialDB = [
   [
-    'ID-1',
+    'id-1',
     {
       title: 'Harry Potter',
       author: 'J.K. Rowling'
     },
   ],
   [
-    'ID-2',
+    'id-2',
     {
       title: 'Jurassic Park',
       author: 'Michael Crichton'
@@ -38,9 +40,31 @@ export const getBookById = (id) => {
   return { id, ...book};
 };
 
-export const saveBook = (title, id, author) => {
-  const receivedBook = { title, author };
-  booksDB.set(id, receivedBook);
+export const saveBook = (book) => {
+  const id = generateId();
+  booksDB.set(id, book);
+  const savedBook = booksDB.get(id);
+
+  return { id, ...savedBook};
+};
+
+export const removeBook = (id) => {
+  const expectedBook = booksDB.get(id);
+  booksDB.delete(id);
+
+  return { id, ...expectedBook };
+};
+
+export const updateBook = (id, receivedBook) => {
+  const previousBook = booksDB.get(id);
+  const expectedBook = {
+    ...previousBook,
+    ...receivedBook
+  };
+
+  removeBook(id);
+
+  booksDB.set(id, expectedBook);
   const savedBook = booksDB.get(id);
 
   return { id, ...savedBook};
