@@ -1,6 +1,8 @@
 #import "../bus/books/types.graphql"
+#import "../bus/starships/types.graphql"
 
 type Query {
+    starships: [Starship!]!
     books: [Book!]!
     book(id: ID!): Book
 }
